@@ -10,6 +10,7 @@ helpdesk/helpdesk_mgmt_project
 helpdesk_mgmt_email
 helpdesk_mgmt_fetchmail_multicompany
 helpdesk_ticket_custom_priority
+hr_holidays_resource
 project/project_task_default_stage
 project/project_timeline
 pm_migration_custom
@@ -17,6 +18,7 @@ project_budget_management
 project_management_security
 project_scrum_agile
 project_scrum_agile_extended
+project_scrum_agile_timeline
 project_team_leave_management
 management_dashboard
 sale_timesheet_approval

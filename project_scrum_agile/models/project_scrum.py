@@ -252,6 +252,11 @@ class ProjectScrumSprint(models.Model):
         'project.scrum.release',
         'Release'
     )
+    task_ids = fields.One2many(
+        'project.task',
+        'sprint_id',
+        'Tasks Details'
+    )
     project_id = fields.Many2one(
         'project.project',
         string='Project'
@@ -1156,14 +1161,14 @@ class ProjectTask(models.Model):
         'Sprint',
         related='product_backlog_id.sprint_id',
         store=True,
-        readonly=True
+        readonly=False
     )
     release_id = fields.Many2one(
         'project.scrum.release',
         'Release',
         related='sprint_id.release_id',
         store=True,
-        readonly=True
+        readonly=False
     )
     description = fields.Html('Description', translate=True)
     warn = fields.Boolean('Email alert')
@@ -1277,7 +1282,6 @@ class ProjectTask(models.Model):
                 vals['task_number'] = self.env['ir.sequence'].next_by_code(
                     'project.task.number') or '/'
         return super(ProjectTask, self).create(vals_list)
-
 
 class AccountAnalyticLine(models.Model):
     _inherit = 'account.analytic.line'
