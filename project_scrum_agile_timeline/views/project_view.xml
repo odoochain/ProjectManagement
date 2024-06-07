@@ -1,0 +1,15 @@
+<odoo>
+
+    <record id="view_task_tree2_extended" model="ir.ui.view">
+        <field name="name">project.task.tree.extended</field>
+        <field name="model">project.task</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="project_scrum_agile.view_task_tree2_extended"/>
+        <field name="arch" type="xml">
+            <field name="date_end" position="before">
+                <field name="date_start"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

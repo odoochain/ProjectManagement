@@ -1172,7 +1172,6 @@ class ProjectTask(models.Model):
     )
     description = fields.Html('Description', translate=True)
     warn = fields.Boolean('Email alert')
-    creator_id = fields.Many2one('res.users', 'Created By')
     email = fields.Char(
         'Send mail',
         help='An email will be sent upon completion and upon validation of the'
@@ -1230,7 +1229,7 @@ class ProjectTask(models.Model):
         for task_id in self:
             name = tools.ustr(task_id.name)
             if task_id.task_number:
-                name = '[' + tools.ustr(task_id.task_number) + ']' + ' ' + name
+                name = name + ' ' + '[' + tools.ustr(task_id.task_number) + ']'
             res.append((task_id.id, name))
         return res
 

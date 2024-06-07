@@ -9,7 +9,7 @@
     "website": "https://onestein.eu",
     "author": "Onestein",
     "license": "AGPL-3",
-    "depends": ["project_scrum_agile", "project_timeline"],
+    "depends": ["project_scrum_agile_extended", "project_timeline"],
     "data": [],
     "auto_install":True,
     "installable": True,

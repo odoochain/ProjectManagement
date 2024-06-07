@@ -906,7 +906,6 @@
                 </page>
             </notebook>
             <field name="user_ids" position="after">
-                <field name="creator_id" string="Creator By"/>
                 <field name="email"/>
                 <field name="partner_ids" widget="many2many_tags"
                        placeholder="Add contacts to notify..."/>
@@ -935,17 +934,14 @@
             <field name="name" position="before">
                 <field name="sequence" invisible="True"/>
                 <field name="task_number"/>
-                <field name="create_date" string="Creation"/>
+                <field name="create_date" string="Creation"  optional="hide"/>
             </field>
             <field name="name" position="after">
-                <field name="write_date" string="Modified"/>
-                <field name="date_deadline" string="Limit"/>
-                <field name="date_end" string="Finalized"/>
+                <field name="write_date" string="Modified"  optional="hide"/>
+                <field name="date_end"/>
                 <field name="product_backlog_id" string="Request"/>
                 <field name="sprint_id" string="Sprint"/>
                 <field name="release_id" string="Release"/>
-                <field name="project_id" string="Project"/>
-                <field name="creator_id" string="Creator By"/>
             </field>
         </field>
     </record>
