@@ -10,7 +10,7 @@
     "author": "Onestein",
     "license": "AGPL-3",
     "depends": ["project_scrum_agile_extended", "project_timeline"],
-    "data": [],
+    "data": ["views/project_view.xml",],
     "auto_install":True,
     "installable": True,
 }
