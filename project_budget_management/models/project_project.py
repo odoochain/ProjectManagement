@@ -113,7 +113,7 @@ class ProjectProject(models.Model):
     def _compute_projected_end_date(self):
         today_date = fields.Date.today()
         for project in self:
-            proj_end_dt = False
+            proj_end_dt = project.expected_end_date
             if (
                     project.percentage_completed > 0
                     and project.date_start
@@ -132,7 +132,7 @@ class ProjectProject(models.Model):
                     proj_end_dt = (
                         project.expected_end_date
                         if project.expected_end_date
-                        and project.expected_end_date >= project.date_start
+                           and project.expected_end_date >= project.date_start
                         else False
                     )
                 else:
@@ -218,3 +218,18 @@ class ProjectProject(models.Model):
         store=True,
         tracking=True,
     )
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("date") and not vals.get("expected_end_date"):
+                vals["expected_end_date"] = vals["date"]
+        return super(ProjectProject, self).create(vals_list)
+
+    def write(self, vals):
+        res = super(ProjectProject, self).write(vals)
+        if vals.get("date") and not vals.get("expected_end_date"):
+            for rec in self:
+                if not rec.expected_end_date:
+                    rec.expected_end_date = vals["date"]
+        return res

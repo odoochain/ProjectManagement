@@ -20,6 +20,16 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.edit_project" />
         <field name="arch" type="xml">
+            <field name="date_start" position="attributes">
+                <attribute name="widget"></attribute>
+                <attribute name="options"></attribute>
+                <attribute name="required">1</attribute>
+            </field>
+            <field name="date" position="attributes">
+                <attribute name="widget"></attribute>
+                <attribute name="options"></attribute>
+                <attribute name="required">1</attribute>
+            </field>
             <xpath expr="/form/header/button[2]" position="after">
                 <button
                     string="Extend Project Finish Date"
@@ -66,7 +76,7 @@
                         <field name="budget_of_completion" />
                     </group>
                     <group string="Project Dates">
-                        <field name="date" />
+                        <field name="date" required="1"/>
                         <field name="rev_date" />
                         <field
                             name="expected_end_date"
@@ -183,6 +193,40 @@
             </xpath>
         </field>
     </record>
+
+    <record model="ir.ui.view" id="view_project">
+        <field name="name">project.project.tree</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project"/>
+        <field name="arch" type="xml">
+            <field name="date_start" position="attributes">
+                <attribute name="widget"></attribute>
+                <attribute name="options"></attribute>
+                <attribute name="required">1</attribute>
+            </field>
+            <field name="date" position="attributes">
+                <attribute name="widget"></attribute>
+                <attribute name="options"></attribute>
+                <attribute name="required">1</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="project_project_view_form_simplified">
+        <field name="name">project.project.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <label for="date_start" string="Start Date"/>
+                <field name="date_start" required="1"/>
+                <label for="date" string="Actual End Date"/>
+                <field name="date" required="1"/>
+            </field>
+        </field>
+    </record>
+
+
 
     <record id="project_analysis_tree_view" model="ir.ui.view">
         <field name="name">project.analysis.tree</field>
