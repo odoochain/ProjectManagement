@@ -1025,24 +1025,19 @@ class ProjectScrumProductBacklog(models.Model):
         @param self: The object pointer
         """
         if 'user_id' in vals:
-            user = self.env['res.users'].browse(vals.get('user_id'))
-            for req in self:
-                message_follower_ids = req.message_follower_ids or []
-                for partner_ids in message_follower_ids:
-                    if user.partner_id.id != partner_ids.partner_id.id:
-                        self.env['mail.followers']._insert_followers(
-                            self._name, [req.id], [user.partner_id.id],
-                            None, {}, None, [])
-
+            new_partner = (
+                self.env["res.users"].browse(vals["user_id"]).partner_id.id
+            )
+            for rec in self:
+                rec.message_unsubscribe(partner_ids=rec.user_id.partner_id.ids)
+                rec.message_subscribe(partner_ids=[new_partner])
         if 'responsible_id' in vals:
-            user = self.env['res.users'].browse(vals.get('responsible_id'))
-            for req in self:
-                message_follower_ids = req.message_follower_ids or []
-                for partner_ids in message_follower_ids:
-                    if user.partner_id.id != partner_ids.partner_id.id:
-                        self.env['mail.followers']._insert_followers(
-                            self._name, [req.id], [user.partner_id.id], None,
-                            {}, None, [])
+            new_partner = (
+                self.env["res.users"].browse(vals["responsible_id"]).partner_id.id
+            )
+            for rec in self:
+                rec.message_unsubscribe(partner_ids=rec.responsible_id.partner_id.ids)
+                rec.message_subscribe(partner_ids=[new_partner])
         return super(ProjectScrumProductBacklog, self).write(vals)
 
     def button_open(self):
