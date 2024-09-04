@@ -8,6 +8,7 @@ from odoo import api, fields, models, _, tools
 from odoo import tools, SUPERUSER_ID
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.osv import expression
 
 
 class Meeting(models.Model):
@@ -1280,6 +1281,14 @@ class ProjectTask(models.Model):
 class AccountAnalyticLine(models.Model):
     _inherit = 'account.analytic.line'
 
+    def _domain_project_id(self):
+        domain = super()._domain_project_id()
+        if not self.user_has_groups('hr_timesheet.group_timesheet_manager'):
+            return expression.AND([[('allow_timesheets', '=', True)],
+                ['|','|','|',('privacy_visibility', '!=', 'followers'), ('message_partner_ids', 'in', [self.env.user.partner_id.id]),('favorite_user_ids', 'in', self.env.user.id),('resource_ids','in',self.env.user.partner_id.id)]
+            ])
+        return domain
+
     date_to = fields.Datetime(
         'Date Up',
         default=lambda *a: time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
@@ -1289,7 +1298,7 @@ class AccountAnalyticLine(models.Model):
     date = fields.Date('Date', required=True)
     project_id = fields.Many2one(
         'project.project',
-        'Project'
+        'Project',domain=_domain_project_id
     )
 
 
